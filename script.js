@@ -1,34 +1,19 @@
-// Fetch links from the JSON file
-fetch('index.json')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json();
-    })
-    .then(links => {
-        console.log("Links loaded:", links); // Debugging the loaded links
-        createButtons(links);
-    })
-    .catch(error => {
-        console.error("Error loading the JSON file:", error);
-    });
+// Sample JSON file (you can replace this with a fetch from an actual .json file)
+const links = [
+    { "name": "Google", "url": "https://www.google.com" },
+    { "name": "Bing", "url": "https://www.bing.com" },
+    { "name": "YouTube", "url": "https://www.youtube.com" }
+];
 
 // Function to create buttons dynamically
-function createButtons(links) {
+function createButtons() {
     const buttonContainer = document.getElementById("button-container");
 
-    if (!buttonContainer) {
-        console.error("Button container not found.");
-        return;
-    }
-
-    links.forEach(url => {
-        // Create a button with the same title for all
+    links.forEach(link => {
         const button = document.createElement("button");
-        button.innerText = "Open Website"; // Same title for all buttons
+        button.innerText = link.name;
         button.onclick = function() {
-            openIframe(url); // Open the corresponding URL in the iframe
+            openIframe(link.url);
         };
         buttonContainer.appendChild(button);
     });
@@ -42,3 +27,6 @@ function openIframe(url) {
     iframe.src = url; // Set the iframe source to the selected link
     iframeContainer.style.display = "block"; // Show the iframe container
 }
+
+// Initialize the page with buttons
+createButtons();
