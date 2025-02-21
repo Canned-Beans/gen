@@ -1,8 +1,8 @@
 // Sample JSON file (you can replace this with a fetch from an actual .json file)
 const links = [
-    { "name": "Google", "url": "https://www.google.com" },
+    { "name": "Google", "url": "https://www.example.com" },
     { "name": "Bing", "url": "https://www.bing.com" },
-    { "name": "YouTube", "url": "https://www.youtube.com" }
+    { "name": "YouTube", "url": "https://www.wikipedia.org" }
 ];
 
 // Function to create buttons dynamically
