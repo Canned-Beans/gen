@@ -1,14 +1,27 @@
 // Fetch links from the JSON file
 fetch('index.json')
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json();
+    })
     .then(links => {
+        console.log("Links loaded:", links); // Debugging the loaded links
         createButtons(links);
     })
-    .catch(error => console.error("Error loading the JSON file:", error));
+    .catch(error => {
+        console.error("Error loading the JSON file:", error);
+    });
 
 // Function to create buttons dynamically
 function createButtons(links) {
     const buttonContainer = document.getElementById("button-container");
+
+    if (!buttonContainer) {
+        console.error("Button container not found.");
+        return;
+    }
 
     links.forEach(url => {
         // Extract the title from the URL (using the domain name)
