@@ -24,23 +24,14 @@ function createButtons(links) {
     }
 
     links.forEach(url => {
-        // Extract the title from the URL (using the domain name)
-        const title = getTitleFromURL(url);
-
-        // Create a button
+        // Create a button with the same title for all
         const button = document.createElement("button");
-        button.innerText = title; // Set button text as the extracted title
+        button.innerText = "Open Website"; // Same title for all buttons
         button.onclick = function() {
             openIframe(url); // Open the corresponding URL in the iframe
         };
         buttonContainer.appendChild(button);
     });
-}
-
-// Function to extract a readable title from a URL
-function getTitleFromURL(url) {
-    const domain = new URL(url).hostname.replace('www.', '').split('.')[0];
-    return domain.charAt(0).toUpperCase() + domain.slice(1); // Capitalize the first letter
 }
 
 // Function to display the iframe in fullscreen
