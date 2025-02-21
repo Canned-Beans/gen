@@ -1,48 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Link Buttons</title>
-    <style>
-        #iframe-container {
-            display: none;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: black;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Playground Games</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+    #game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-        .button-container {
-            margin-top: 20px;
-            text-align: center;
-        }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      transition: background-color 0.3s;
+    }
 
-        button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
+    button:hover {
+      background-color: #45a049;
+    }
+
+    iframe {
+      width: 80%;
+      height: 80vh;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="button-container" id="button-container">
-        <!-- Buttons will be generated here -->
-    </div>
 
-    <div id="iframe-container">
-        <iframe id="iframe" src=""></iframe>
-    </div>
+  <h1>Math Playground Games</h1>
+  
+  <!-- Container for buttons -->
+  <div id="game-container">
+    <!-- Buttons will be injected here by JavaScript -->
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Iframe to display the game -->
+  <iframe id="game-iframe" src="" style="display: none;"></iframe>
+
+  <script>
+    // Fetch the game URLs from the index.json file
+    fetch('index.json')
+      .then(response => response.json())
+      .then(games => {
+        const gameContainer = document.getElementById('game-container');
+        const iframe = document.getElementById('game-iframe');
+
+        games.forEach(gameUrl => {
+          const button = document.createElement('button');
+
+          // Generate title from the URL (remove '.html' and split by '/')
+          const gameTitle = gameUrl.split('/').pop().replace('.html', '').replace(/_/g, ' ').toUpperCase();
+          button.textContent = gameTitle;  // Set button text to the generated title
+
+          button.onclick = function() {
+            iframe.src = gameUrl;
+            iframe.style.display = 'block';  // Show iframe when a game is clicked
+          };
+
+          gameContainer.appendChild(button);
+        });
+      })
+      .catch(error => console.error('Error loading the games JSON file:', error));
+  </script>
+
 </body>
 </html>
